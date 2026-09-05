@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Camera View{% endblock %}
+
+{% block body_attributes %}class="bg-rov-dark font-orbitron overflow-hidden h-screen"{% endblock %}
+
+{% block content %}
+<div class="camera-container" data-camera-urls='{{ camera_urls|tojson }}'>
+  <iframe id="camera-stream" class="fullscreen-iframe" src="" scrolling="no"></iframe>
+  
+  <div class="camera-controls">
+    <div class="flex gap-2">
+      <button class="btn-camera" data-camera="1">1</button>
+      <button class="btn-camera" data-camera="2">2</button>
+      <button class="btn-camera" data-camera="3">3</button>
+      <button class="btn-camera" data-camera="4">4</button>
+    </div>
+    <button id="record-button" class="btn-record">
+      <span class="record-icon"></span> Record
+    </button>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="/static/cameras.js"></script>
+<script src="/static/recording.js"></script>
+{% endblock %}

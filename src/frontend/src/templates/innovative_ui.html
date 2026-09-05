@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Home | X17-Surface{% endblock %}
+
+{% block body_attributes %}class="bg-rov-dark font-orbitron text-white m-0 p-0 h-screen w-screen overflow-hidden"{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+
+    <!-- Left Container: Camera Streams -->
+    <div class="dashboard-col">
+        <div class="stream-wrapper">
+            <iframe id="stream1" class="stream-iframe" src="{{ camera_urls.cv_camera|safe }}" scrolling="no">
+                <button class="photo-button" data-camera="cv_camera">📸</button>
+            </iframe>
+        </div>
+        <div class="stream-wrapper">
+            <iframe id="stream2" class="stream-iframe" src="{{ camera_urls.camera1|safe }}" scrolling="no">
+                <button class="photo-button" data-camera="camera1">📸</button>
+            </iframe>
+        </div>
+        <div class="stream-wrapper">
+            <iframe id="stream3" class="stream-iframe" src="{{ camera_urls.camera2|safe }}" scrolling="no">
+                <button class="photo-button" data-camera="camera2">📸</button>
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Middle Container: Thrusters & Motion Commands -->
+    <div class="dashboard-col">
+        <div class="speedo-grid">
+            <div class="thruster-cell"><canvas id="speedo1" class="thruster-canvas"></canvas><div class="thruster-label">1</div></div>
+            <div class="thruster-cell"><canvas id="speedo2" class="thruster-canvas"></canvas><div class="thruster-label">2</div></div>
+            <div class="thruster-cell"><canvas id="speedo3" class="thruster-canvas"></canvas><div class="thruster-label">3</div></div>
+            <div class="thruster-cell"><canvas id="speedo4" class="thruster-canvas"></canvas><div class="thruster-label">4</div></div>
+            <div class="thruster-cell"><canvas id="speedo5" class="thruster-canvas"></canvas><div class="thruster-label">5</div></div>
+            <div class="thruster-cell"><canvas id="speedo6" class="thruster-canvas"></canvas><div class="thruster-label">6</div></div>
+        </div>
+
+        <div id="command-container" class="command-container">
+            <div class="command-box">
+                <span class="command-label">Linear Command</span>
+                <span class="command-value">&lt;00.00, 00.00, 00.00&gt; m/s</span>
+            </div>
+            <div class="command-box">
+                <span class="command-label">Angular Command</span>
+                <span class="command-value">&lt;00.00, 00.00, 00.00&gt; &deg;/s</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Container: Telemetry & Tasks -->
+    <div class="dashboard-col">
+        <div class="connected-group">
+            <div id="internal-data" class="data-group-connected">
+                <div class="data-card"><span class="data-label">Pres</span><span id="hat-temp" class="data-value">0.0 psi</span></div>
+                <div class="data-card"><span class="data-label">Temp</span><span id="pi-temp" class="data-value">0.0&deg;C</span></div>
+                <div class="data-card"><span class="data-label">Hum</span><span class="data-value">50%</span></div>
+            </div>
+        </div>
+
+        <div id="electrical-data" class="data-group">
+            <div class="data-card"><span class="data-label">Current</span><span class="data-value">00.00 A</span></div>
+            <div class="data-card"><span class="data-label">Voltage</span><span class="data-value">00.00 V</span></div>
+        </div>
+
+        <div id="inertial-data" class="data-group">
+            <div class="data-card"><span class="data-label">Leak</span><span id="leak-data" class="data-value">&lt;30&gt;</span></div>
+            <div class="data-card"><span class="data-label">Gyro</span><span class="data-value">&lt;0, 0, 0&gt;</span></div>
+        </div>
+
+        <div id="external-data" class="data-group">
+            <div class="data-card"><span class="data-label">Depth</span><span id="depth-data" class="data-value">00.00 m</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- <script src="/static/socketio_listener.js"></script> -->
+
+{% endblock %}

@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block title %}Controller Mapping Editor{% endblock %}
+
+{% block body_attributes %}class="bg-rov-dark font-orbitron text-white min-h-screen"{% endblock %}
+
+{% block content %}
+<div class="mapping-editor-container">
+    <!-- Status Widget -->
+    <div class="mapping-status-widget">
+        <div class="flex items-center gap-3">
+            <h5 class="m-0 text-lg font-bold text-rov-accent">Controller Status</h5>
+            <span class="status-indicator status-disconnected" id="controller-status-indicator"></span>
+            <span id="controller-status-text" class="text-sm font-sans">Disconnected</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="rov-btn-danger" id="reset-thrusters-btn" onclick="resetThrusters()">Reset Thrusters</button>
+            <span class="text-sm font-sans text-gray-300">Active Mapping:</span>
+            <span class="current-mapping-badge" id="active-mapping-name">None</span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Config List -->
+        <div class="lg:col-span-3 space-y-4">
+            <div class="config-list-card">
+                <div class="flex justify-between items-center pb-2 border-b border-rov-border">
+                    <h4 class="m-0 text-lg font-bold text-white">Configurations</h4>
+                    <button class="rov-btn-success flex items-center gap-1 py-1 px-2.5 text-xs" onclick="createNewConfig()">
+                        <i class="bi bi-plus-lg"></i> New
+                    </button>
+                </div>
+                <div id="configList" class="space-y-1.5 pt-2">
+                    <!-- Configs loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Live ROV Velocity Data -->
+            <div id="velocity-display" class="bg-rov-panel border border-rov-border rounded-xl p-4 space-y-2 text-sm font-sans">
+                <div class="font-bold text-rov-accent uppercase tracking-wider text-xs pb-2 border-b border-rov-border">
+                    Live ROV Velocity Data
+                </div>
+                <p class="text-gray-400 m-0">Waiting for velocity data...</p>
+            </div>
+        </div>
+
+        <!-- Config Editor -->
+        <div class="lg:col-span-9">
+            <div class="editor-form-card">
+                <div class="flex justify-between items-center pb-3 border-b border-rov-border">
+                    <h4 class="m-0 text-xl font-bold text-white">Edit Configuration</h4>
+                    <div class="flex gap-2">
+                        <button class="rov-btn-success" id="activateConfigBtn" onclick="activateCurrentConfig()">Activate</button>
+                        <button class="rov-btn-primary" onclick="saveCurrentConfig()">Save</button>
+                        <button class="rov-btn-danger" onclick="deleteCurrentConfig()">Delete</button>
+                    </div>
+                </div>
+
+                <form id="mappingForm" class="space-y-6 pt-2 font-sans">
+                    <div class="space-y-1.5">
+                        <label class="block text-sm font-semibold text-white">Configuration Name</label>
+                        <input type="text" class="rov-input-text" id="configName" required>
+                    </div>
+
+                    <!-- Linear Controls -->
+                    <div class="space-y-3">
+                        <h5 class="text-base font-bold text-rov-accent m-0 font-orbitron">Linear Controls</h5>
+                        <div class="axis-config-box">
+                            <table class="mapping-table">
+                                <thead>
+                                    <tr>
+                                        <th>Axis</th>
+                                        <th>Device</th>
+                                        <th>Axis Number</th>
+                                        <th>Scale</th>
+                                        <th>Invert</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-semibold">X Axis</td>
+                                        <td>
+                                            <select class="rov-select" id="linear-x-device">
+                                                <option value="joystick_left">Left Joystick</option>
+                                                <option value="joystick_right">Right Joystick</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="rov-select" id="linear-x-axis">
+                                                <option value="0">0 - Left/Right</option>
+                                                <option value="1">1 - Front/Back</option>
+                                                <option value="2">2 - Twist</option>
+                                                <option value="3">3 - Slider</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="rov-input-number" id="linear-x-scale" step="0.1">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="rov-checkbox" id="linear-x-invert">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">Y Axis</td>
+                                        <td>
+                                            <select class="rov-select" id="linear-y-device">
+                                                <option value="joystick_left">Left Joystick</option>
+                                                <option value="joystick_right">Right Joystick</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="rov-select" id="linear-y-axis">
+                                                <option value="0">0 - Left/Right</option>
+                                                <option value="1">1 - Front/Back</option>
+                                                <option value="2">2 - Twist</option>
+                                                <option value="3">3 - Slider</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="rov-input-number" id="linear-y-scale" step="0.1">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="rov-checkbox" id="linear-y-invert">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">Z Axis</td>
+                                        <td>
+                                            <select class="rov-select" id="linear-z-device">
+                                                <option value="joystick_left">Left Joystick</option>
+                                                <option value="joystick_right">Right Joystick</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="rov-select" id="linear-z-axis">
+                                                <option value="0">0 - Left/Right</option>
+                                                <option value="1">1 - Front/Back</option>
+                                                <option value="2">2 - Twist</option>
+                                                <option value="3">3 - Slider</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="rov-input-number" id="linear-z-scale" step="0.1">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="rov-checkbox" id="linear-z-invert">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Angular Controls -->
+                    <div class="space-y-3">
+                        <h5 class="text-base font-bold text-rov-accent m-0 font-orbitron">Angular Controls</h5>
+                        <div class="axis-config-box">
+                            <table class="mapping-table">
+                                <thead>
+                                    <tr>
+                                        <th>Axis</th>
+                                        <th>Device</th>
+                                        <th>Axis Number</th>
+                                        <th>Scale</th>
+                                        <th>Invert</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-semibold">Roll</td>
+                                        <td>
+                                            <select class="rov-select" id="angular-x-device">
+                                                <option value="joystick_left">Left Joystick</option>
+                                                <option value="joystick_right">Right Joystick</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="rov-select" id="angular-x-axis">
+                                                <option value="0">0 - Left/Right</option>
+                                                <option value="1">1 - Front/Back</option>
+                                                <option value="2">2 - Twist</option>
+                                                <option value="3">3 - Slider</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="rov-input-number" id="angular-x-scale" step="0.1">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="rov-checkbox" id="angular-x-invert">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">Pitch</td>
+                                        <td>
+                                            <select class="rov-select" id="angular-y-device">
+                                                <option value="joystick_left">Left Joystick</option>
+                                                <option value="joystick_right">Right Joystick</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="rov-select" id="angular-y-axis">
+                                                <option value="0">0 - Left/Right</option>
+                                                <option value="1">1 - Front/Back</option>
+                                                <option value="2">2 - Twist</option>
+                                                <option value="3">3 - Slider</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="rov-input-number" id="angular-y-scale" step="0.1">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="rov-checkbox" id="angular-y-invert">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-semibold">Yaw</td>
+                                        <td>
+                                            <select class="rov-select" id="angular-z-device">
+                                                <option value="joystick_left">Left Joystick</option>
+                                                <option value="joystick_right">Right Joystick</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="rov-select" id="angular-z-axis">
+                                                <option value="0">0 - Left/Right</option>
+                                                <option value="1">1 - Front/Back</option>
+                                                <option value="2">2 - Twist</option>
+                                                <option value="3">3 - Slider</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="rov-input-number" id="angular-z-scale" step="0.1">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="rov-checkbox" id="angular-z-invert">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Other Settings -->
+                    <div class="space-y-3">
+                        <h5 class="text-base font-bold text-rov-accent m-0 font-orbitron">Other Settings</h5>
+                        <div class="max-w-xs space-y-1.5">
+                            <label class="block text-sm font-semibold text-white">Dead Zone</label>
+                            <input type="number" class="rov-input-number text-left" id="deadZone" step="0.01" min="0" max="1">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="/static/socket-io-v4.8.1.js"></script>
+<script src="/static/controller_mapping.js"></script>
+{% endblock %}

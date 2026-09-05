@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}All Cameras{% endblock %}
+
+{% block body_attributes %}class="bg-rov-dark font-orbitron text-white min-h-screen"{% endblock %}
+
+{% block content %}
+<div class="camera-grid-container">
+  <div class="camera-grid">
+    
+    <!-- Camera 1 -->
+    <div class="camera-cell">
+      <div class="camera-label">Camera 1</div>
+      <iframe class="w-full h-full border-none" src="{{ camera_urls.camera1|safe }}" scrolling="no"></iframe>
+      
+      <button class="photo-button" data-camera="camera1">
+        📸
+      </button>
+
+      <button class="fullscreen-button" data-camera="1">
+        <i class="bi bi-fullscreen"></i>
+      </button>
+    </div>
+    
+    <!-- Camera 2 -->
+    <div class="camera-cell">
+      <div class="camera-label">Camera 2</div>
+      <iframe class="w-full h-full border-none" src="{{ camera_urls.camera2|safe }}" scrolling="no"></iframe>
+
+      <button class="photo-button" data-camera="camera2">
+        📸
+      </button>
+
+      <button class="fullscreen-button" data-camera="2">
+        <i class="bi bi-fullscreen"></i>
+      </button>
+    </div>
+    
+    <!-- Camera 3 -->
+    <div class="camera-cell">
+      <div class="camera-label">Camera 3</div>
+      <iframe class="w-full h-full border-none" src="{{ camera_urls.camera3|safe }}" scrolling="no"></iframe>
+
+      <button class="photo-button" data-camera="camera3">
+        📸
+      </button>
+
+      <button class="fullscreen-button" data-camera="3">
+        <i class="bi bi-fullscreen"></i>
+      </button>
+    </div>
+    
+    <!-- Camera 4 -->
+    <div class="camera-cell">
+      <div class="camera-label">Camera 4</div>
+      <iframe class="w-full h-full border-none" src="{{ camera_urls.camera4|safe }}" scrolling="no"></iframe>
+
+      <button class="photo-button" data-camera="camera4">
+        📸
+      </button>
+
+      <button class="fullscreen-button" data-camera="4">
+        <i class="bi bi-fullscreen"></i>
+      </button>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="/static/all_cameras.js"></script>
+{% endblock %}
