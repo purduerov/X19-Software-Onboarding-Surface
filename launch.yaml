@@ -16,16 +16,6 @@ nodes:
     cmd: "npm run dev:css"
     mode: "dev"  # Only runs in dev mode
 
-  - name: "ZMQ Depth Subscriber Node"
-    cwd: "."
-    cmd: "python3 src/zmq/python/messaging/depth_subscriber_node.py"
-    mode: "all"
-
-  - name: "ZMQ Demo Telemetry Publisher"
-    cwd: "."
-    cmd: "python3 testing/hello_pub.py"
-    mode: "all"
-
   - name: "ZMQ Go2RTC Video Node"
     cwd: "."
     cmd: "python3 src/zmq/python/videos/go2rtc_node.py"

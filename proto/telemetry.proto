@@ -14,8 +14,6 @@ message SensorData {
   uint64 timestamp_us = 1;
   Vector3D acceleration = 2;      // m/s^2
   Vector3D angular_velocity = 3;   // rad/s
-  float depth = 4;                 // meters (calculated from pressure)
-  float temperature = 5;           // Celsius
 }
 
 // Control commands from topside (joystick) to the ROV
