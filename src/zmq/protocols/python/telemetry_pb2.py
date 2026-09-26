@@ -13,19 +13,13 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0ftelemetry.proto\x12\rrov.telemetry\"+\n\x08Vector3D\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xa8\x01\n\nSensorData\x12\x14\n\x0ctimestamp_us\x18\x01 \x01(\x04\x12-\n\x0c\x61\x63\x63\x65leration\x18\x02 \x01(\x0b\x32\x17.rov.telemetry.Vector3D\x12\x31\n\x10\x61ngular_velocity\x18\x03 \x01(\x0b\x32\x17.rov.telemetry.Vector3D\x12\r\n\x05\x64\x65pth\x18\x04 \x01(\x02\x12\x13\n\x0btemperature\x18\x05 \x01(\x02\"\x84\x01\n\x0fJoystickCommand\x12\x14\n\x0ctimestamp_us\x18\x01 \x01(\x04\x12\x0f\n\x07\x66orward\x18\x02 \x01(\x02\x12\x0e\n\x06strafe\x18\x03 \x01(\x02\x12\x10\n\x08vertical\x18\x04 \x01(\x02\x12\r\n\x05pitch\x18\x05 \x01(\x02\x12\x0c\n\x04roll\x18\x06 \x01(\x02\x12\x0b\n\x03yaw\x18\x07 \x01(\x02\"\x13\n\x04test\x12\x0b\n\x03msg\x18\x01 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0ftelemetry.proto\x12\rrov.telemetry\"/\n\ttelemetry\x12\x13\n\x0btemperature\x18\x01 \x01(\x02\x12\r\n\x05\x64\x65pth\x18\x02 \x01(\x02\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'telemetry_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _VECTOR3D._serialized_start=34
-  _VECTOR3D._serialized_end=77
-  _SENSORDATA._serialized_start=80
-  _SENSORDATA._serialized_end=248
-  _JOYSTICKCOMMAND._serialized_start=251
-  _JOYSTICKCOMMAND._serialized_end=383
-  _TEST._serialized_start=385
-  _TEST._serialized_end=404
+  _TELEMETRY._serialized_start=34
+  _TELEMETRY._serialized_end=81
 # @@protoc_insertion_point(module_scope)
