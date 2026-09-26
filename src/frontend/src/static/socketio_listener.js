@@ -38,7 +38,7 @@ socket.on('surface_imu', function(msg) {
     document.getElementById("angular-command").innerHTML = "Pitch: " + msg.twist.angular.x.toFixed(3) + "<br>Roll: " + msg.twist.angular.y.toFixed(3) + "<br>Yaw: " + msg.twist.angular.z.toFixed(3);
 });
 
-socket.on('hat_temp', function(msg){
+socket.on('temp', function(msg){
     // Log the message to the browser console
     // console.log("New message received:", msg);
     // Parse the message into json
@@ -46,6 +46,16 @@ socket.on('hat_temp', function(msg){
 
     // Insert the following x: 0<br>y: 0<br>z: 0 into the HTLM div with id linear-command
     document.getElementById("hat-temp").innerHTML = `${msg.data.toFixed(2)} °C`;
+});
+
+socket.on('depth', function(msg){
+    // Log the message to the browser console
+    // console.log("New message received:", msg);
+    // Parse the message into json
+    msg = JSON.parse(msg);
+
+    // Insert the following x: 0<br>y: 0<br>z: 0 into the HTLM div with id linear-command
+    document.getElementById("depth-data").innerHTML = `${msg.data.toFixed(2)} °C`;
 });
 
 socket.on('pi_temp', function(msg){

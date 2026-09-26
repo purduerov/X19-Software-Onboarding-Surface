@@ -16,8 +16,13 @@ nodes:
     cmd: "npm run dev:css"
     mode: "dev"  # Only runs in dev mode
 
-  - name: "ZMQ Go2RTC Video Node"
+  # - name: "ZMQ Go2RTC Video Node"
+  #   cwd: "."
+  #   cmd: "python3 src/zmq/python/videos/go2rtc_node.py"
+  #   mode: "all"
+
+  - name: "Telemetry Onboarding"
     cwd: "."
-    cmd: "python3 src/zmq/python/videos/go2rtc_node.py"
+    cmd: "python3 src/zmq/python/onboarding/onboarding_sub.py"
     mode: "all"
 
