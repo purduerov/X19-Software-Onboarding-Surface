@@ -8,7 +8,7 @@ default_mode: dev
 nodes:
   - name: "Flask Backend"
     cwd: "src/frontend/src"
-    cmd: "python3 app.py"
+    cmd: "../../../venv/bin/python app.py"
     mode: "all"  # Runs in both dev and field modes
 
   - name: "Tailwind CSS Watcher"
@@ -18,6 +18,19 @@ nodes:
 
   - name: "ZMQ Go2RTC Video Node"
     cwd: "."
-    cmd: "python3 src/zmq/python/videos/go2rtc_node.py"
+    cmd: "./venv/bin/python src/zmq/python/videos/go2rtc_node.py"
     mode: "all"
+
+  # - name: "Depth Camera Node"
+  #   cwd: "."
+  #   cmd: "./venv/bin/python src/zmq/python/messaging/depth_camera_node.py"
+  #   mode: "all"
+
+  - name: "Onboard Node"
+    cwd: "."
+    cmd: "./venv/bin/python src/zmq/python/messaging/depth_subscriber_node.py"
+    mode: "all"
+
+  
+
 

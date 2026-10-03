@@ -9,6 +9,16 @@ socket.on('count', function(msg) {
     document.getElementById('count-data').innerText = msg;
 });
 
+socket.on('depth', function(msg) {
+    msg = JSON.parse(msg); 
+    document.getElementById("depth-data").innerText = msg.data;
+});
+
+socket.on('temp', function(msg) {
+    msg = JSON.parse(msg);
+    document.getElementById("hat-temp").innerText = msg.data
+});
+
 // Function to handle 'rov_velocity' messages from the server
 socket.on('rov_velocity', function(msg) {
     // Log the message to the browser console
