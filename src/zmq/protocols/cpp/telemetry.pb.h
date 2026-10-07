@@ -365,8 +365,6 @@ class SensorData final :
     kAccelerationFieldNumber = 2,
     kAngularVelocityFieldNumber = 3,
     kTimestampUsFieldNumber = 1,
-    kDepthFieldNumber = 4,
-    kTemperatureFieldNumber = 5,
   };
   // .rov.telemetry.Vector3D acceleration = 2;
   bool has_acceleration() const;
@@ -413,24 +411,6 @@ class SensorData final :
   void _internal_set_timestamp_us(uint64_t value);
   public:
 
-  // float depth = 4;
-  void clear_depth();
-  float depth() const;
-  void set_depth(float value);
-  private:
-  float _internal_depth() const;
-  void _internal_set_depth(float value);
-  public:
-
-  // float temperature = 5;
-  void clear_temperature();
-  float temperature() const;
-  void set_temperature(float value);
-  private:
-  float _internal_temperature() const;
-  void _internal_set_temperature(float value);
-  public:
-
   // @@protoc_insertion_point(class_scope:rov.telemetry.SensorData)
  private:
   class _Internal;
@@ -442,8 +422,6 @@ class SensorData final :
     ::rov::telemetry::Vector3D* acceleration_;
     ::rov::telemetry::Vector3D* angular_velocity_;
     uint64_t timestamp_us_;
-    float depth_;
-    float temperature_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -1089,46 +1067,6 @@ inline void SensorData::set_allocated_angular_velocity(::rov::telemetry::Vector3
   }
   _impl_.angular_velocity_ = angular_velocity;
   // @@protoc_insertion_point(field_set_allocated:rov.telemetry.SensorData.angular_velocity)
-}
-
-// float depth = 4;
-inline void SensorData::clear_depth() {
-  _impl_.depth_ = 0;
-}
-inline float SensorData::_internal_depth() const {
-  return _impl_.depth_;
-}
-inline float SensorData::depth() const {
-  // @@protoc_insertion_point(field_get:rov.telemetry.SensorData.depth)
-  return _internal_depth();
-}
-inline void SensorData::_internal_set_depth(float value) {
-  
-  _impl_.depth_ = value;
-}
-inline void SensorData::set_depth(float value) {
-  _internal_set_depth(value);
-  // @@protoc_insertion_point(field_set:rov.telemetry.SensorData.depth)
-}
-
-// float temperature = 5;
-inline void SensorData::clear_temperature() {
-  _impl_.temperature_ = 0;
-}
-inline float SensorData::_internal_temperature() const {
-  return _impl_.temperature_;
-}
-inline float SensorData::temperature() const {
-  // @@protoc_insertion_point(field_get:rov.telemetry.SensorData.temperature)
-  return _internal_temperature();
-}
-inline void SensorData::_internal_set_temperature(float value) {
-  
-  _impl_.temperature_ = value;
-}
-inline void SensorData::set_temperature(float value) {
-  _internal_set_temperature(value);
-  // @@protoc_insertion_point(field_set:rov.telemetry.SensorData.temperature)
 }
 
 // -------------------------------------------------------------------

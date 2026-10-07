@@ -42,8 +42,6 @@ PROTOBUF_CONSTEXPR SensorData::SensorData(
     /*decltype(_impl_.acceleration_)*/nullptr
   , /*decltype(_impl_.angular_velocity_)*/nullptr
   , /*decltype(_impl_.timestamp_us_)*/uint64_t{0u}
-  , /*decltype(_impl_.depth_)*/0
-  , /*decltype(_impl_.temperature_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct SensorDataDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SensorDataDefaultTypeInternal()
@@ -111,8 +109,6 @@ const uint32_t TableStruct_telemetry_2eproto::offsets[] PROTOBUF_SECTION_VARIABL
   PROTOBUF_FIELD_OFFSET(::rov::telemetry::SensorData, _impl_.timestamp_us_),
   PROTOBUF_FIELD_OFFSET(::rov::telemetry::SensorData, _impl_.acceleration_),
   PROTOBUF_FIELD_OFFSET(::rov::telemetry::SensorData, _impl_.angular_velocity_),
-  PROTOBUF_FIELD_OFFSET(::rov::telemetry::SensorData, _impl_.depth_),
-  PROTOBUF_FIELD_OFFSET(::rov::telemetry::SensorData, _impl_.temperature_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rov::telemetry::JoystickCommand, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -137,8 +133,8 @@ const uint32_t TableStruct_telemetry_2eproto::offsets[] PROTOBUF_SECTION_VARIABL
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::rov::telemetry::Vector3D)},
   { 9, -1, -1, sizeof(::rov::telemetry::SensorData)},
-  { 20, -1, -1, sizeof(::rov::telemetry::JoystickCommand)},
-  { 33, -1, -1, sizeof(::rov::telemetry::test)},
+  { 18, -1, -1, sizeof(::rov::telemetry::JoystickCommand)},
+  { 31, -1, -1, sizeof(::rov::telemetry::test)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -150,20 +146,19 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_telemetry_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\017telemetry.proto\022\rrov.telemetry\"+\n\010Vect"
-  "or3D\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"\250\001"
+  "or3D\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"\204\001"
   "\n\nSensorData\022\024\n\014timestamp_us\030\001 \001(\004\022-\n\014ac"
   "celeration\030\002 \001(\0132\027.rov.telemetry.Vector3"
   "D\0221\n\020angular_velocity\030\003 \001(\0132\027.rov.teleme"
-  "try.Vector3D\022\r\n\005depth\030\004 \001(\002\022\023\n\013temperatu"
-  "re\030\005 \001(\002\"\204\001\n\017JoystickCommand\022\024\n\014timestam"
-  "p_us\030\001 \001(\004\022\017\n\007forward\030\002 \001(\002\022\016\n\006strafe\030\003 "
-  "\001(\002\022\020\n\010vertical\030\004 \001(\002\022\r\n\005pitch\030\005 \001(\002\022\014\n\004"
-  "roll\030\006 \001(\002\022\013\n\003yaw\030\007 \001(\002\"\023\n\004test\022\013\n\003msg\030\001"
-  " \001(\tb\006proto3"
+  "try.Vector3D\"\204\001\n\017JoystickCommand\022\024\n\014time"
+  "stamp_us\030\001 \001(\004\022\017\n\007forward\030\002 \001(\002\022\016\n\006straf"
+  "e\030\003 \001(\002\022\020\n\010vertical\030\004 \001(\002\022\r\n\005pitch\030\005 \001(\002"
+  "\022\014\n\004roll\030\006 \001(\002\022\013\n\003yaw\030\007 \001(\002\"\023\n\004test\022\013\n\003m"
+  "sg\030\001 \001(\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_telemetry_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_telemetry_2eproto = {
-    false, false, 412, descriptor_table_protodef_telemetry_2eproto,
+    false, false, 376, descriptor_table_protodef_telemetry_2eproto,
     "telemetry.proto",
     &descriptor_table_telemetry_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_telemetry_2eproto::offsets,
@@ -479,8 +474,6 @@ SensorData::SensorData(const SensorData& from)
       decltype(_impl_.acceleration_){nullptr}
     , decltype(_impl_.angular_velocity_){nullptr}
     , decltype(_impl_.timestamp_us_){}
-    , decltype(_impl_.depth_){}
-    , decltype(_impl_.temperature_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -490,9 +483,7 @@ SensorData::SensorData(const SensorData& from)
   if (from._internal_has_angular_velocity()) {
     _this->_impl_.angular_velocity_ = new ::rov::telemetry::Vector3D(*from._impl_.angular_velocity_);
   }
-  ::memcpy(&_impl_.timestamp_us_, &from._impl_.timestamp_us_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.temperature_) -
-    reinterpret_cast<char*>(&_impl_.timestamp_us_)) + sizeof(_impl_.temperature_));
+  _this->_impl_.timestamp_us_ = from._impl_.timestamp_us_;
   // @@protoc_insertion_point(copy_constructor:rov.telemetry.SensorData)
 }
 
@@ -504,8 +495,6 @@ inline void SensorData::SharedCtor(
       decltype(_impl_.acceleration_){nullptr}
     , decltype(_impl_.angular_velocity_){nullptr}
     , decltype(_impl_.timestamp_us_){uint64_t{0u}}
-    , decltype(_impl_.depth_){0}
-    , decltype(_impl_.temperature_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -543,9 +532,7 @@ void SensorData::Clear() {
     delete _impl_.angular_velocity_;
   }
   _impl_.angular_velocity_ = nullptr;
-  ::memset(&_impl_.timestamp_us_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.temperature_) -
-      reinterpret_cast<char*>(&_impl_.timestamp_us_)) + sizeof(_impl_.temperature_));
+  _impl_.timestamp_us_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -576,22 +563,6 @@ const char* SensorData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_angular_velocity(), ptr);
           CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // float depth = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
-          _impl_.depth_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float temperature = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 45)) {
-          _impl_.temperature_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
@@ -644,26 +615,6 @@ uint8_t* SensorData::_InternalSerialize(
         _Internal::angular_velocity(this).GetCachedSize(), target, stream);
   }
 
-  // float depth = 4;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_depth = this->_internal_depth();
-  uint32_t raw_depth;
-  memcpy(&raw_depth, &tmp_depth, sizeof(tmp_depth));
-  if (raw_depth != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(4, this->_internal_depth(), target);
-  }
-
-  // float temperature = 5;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_temperature = this->_internal_temperature();
-  uint32_t raw_temperature;
-  memcpy(&raw_temperature, &tmp_temperature, sizeof(tmp_temperature));
-  if (raw_temperature != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(5, this->_internal_temperature(), target);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -699,24 +650,6 @@ size_t SensorData::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_timestamp_us());
   }
 
-  // float depth = 4;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_depth = this->_internal_depth();
-  uint32_t raw_depth;
-  memcpy(&raw_depth, &tmp_depth, sizeof(tmp_depth));
-  if (raw_depth != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float temperature = 5;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_temperature = this->_internal_temperature();
-  uint32_t raw_temperature;
-  memcpy(&raw_temperature, &tmp_temperature, sizeof(tmp_temperature));
-  if (raw_temperature != 0) {
-    total_size += 1 + 4;
-  }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -746,20 +679,6 @@ void SensorData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   if (from._internal_timestamp_us() != 0) {
     _this->_internal_set_timestamp_us(from._internal_timestamp_us());
   }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_depth = from._internal_depth();
-  uint32_t raw_depth;
-  memcpy(&raw_depth, &tmp_depth, sizeof(tmp_depth));
-  if (raw_depth != 0) {
-    _this->_internal_set_depth(from._internal_depth());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_temperature = from._internal_temperature();
-  uint32_t raw_temperature;
-  memcpy(&raw_temperature, &tmp_temperature, sizeof(tmp_temperature));
-  if (raw_temperature != 0) {
-    _this->_internal_set_temperature(from._internal_temperature());
-  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -778,8 +697,8 @@ void SensorData::InternalSwap(SensorData* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SensorData, _impl_.temperature_)
-      + sizeof(SensorData::_impl_.temperature_)
+      PROTOBUF_FIELD_OFFSET(SensorData, _impl_.timestamp_us_)
+      + sizeof(SensorData::_impl_.timestamp_us_)
       - PROTOBUF_FIELD_OFFSET(SensorData, _impl_.acceleration_)>(
           reinterpret_cast<char*>(&_impl_.acceleration_),
           reinterpret_cast<char*>(&other->_impl_.acceleration_));
